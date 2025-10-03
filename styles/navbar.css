@@ -1,0 +1,193 @@
+.navbar {
+    background-color: rgba(0, 0, 0, 0.9);
+    padding: 15px 0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(255, 215, 0, 0.3);
+}
+
+.navContainer {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+}
+
+.navLogo {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: var(--yellow-pokemon);
+    text-decoration: none;
+    font-family: var(--font-style);
+}
+
+.navLogo:hover {
+    color: #ffd700;
+}
+
+.navMenu {
+    display: flex;
+    gap: 30px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    align-items: center;
+}
+
+.navItem {
+    position: relative;
+}
+
+.navLink {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1rem;
+    transition: color 0.3s ease;
+    display: block;
+    padding: 10px 15px;
+}
+
+.navLink:hover {
+    color: var(--yellow-pokemon);
+}
+
+/* Dropdown */
+.dropdown {
+    position: relative;
+}
+
+.dropdown::after {
+    content: '';
+    position: absolute;
+    bottom: -15px;
+    left: 0;
+    right: 0;
+    height: 15px;
+}
+
+.dropdownMenu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.95);
+    border-radius: 10px;
+    padding: 10px 0;
+    min-width: 220px;
+    list-style: none;
+    margin-top: 0;
+    padding-top: 15px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.7);
+    border: 2px solid var(--yellow-pokemon);
+}
+
+.dropdown:hover .dropdownMenu {
+    display: block;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.dropdownMenu li {
+    padding: 0;
+}
+
+.dropdownMenu a {
+    display: block;
+    padding: 12px 20px;
+    color: white;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+}
+
+.dropdownMenu a:hover {
+    background-color: var(--yellow-pokemon);
+    color: black;
+    padding-left: 25px;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .navLogo {
+        font-size: 1.5rem;
+    }
+    
+    .navMenu {
+        gap: 20px;
+    }
+    
+    .navLink {
+        font-size: 0.9rem;
+        padding: 8px 12px;
+    }
+}
+
+@media (max-width: 768px) {
+    .navbar {
+        padding: 10px 0;
+    }
+    
+    .navContainer {
+        padding: 0 10px;
+    }
+    
+    .navLogo {
+        font-size: 1.3rem;
+    }
+    
+    .navMenu {
+        gap: 10px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    .navLink {
+        font-size: 0.85rem;
+        padding: 6px 10px;
+    }
+    
+    .dropdownMenu {
+        min-width: 180px;
+        font-size: 0.8rem;
+    }
+    
+    .dropdownMenu a {
+        padding: 10px 15px;
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .navContainer {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .navLogo {
+        font-size: 1.2rem;
+    }
+    
+    .navMenu {
+        width: 100%;
+        justify-content: space-around;
+    }
+    
+    .navLink {
+        font-size: 0.75rem;
+        padding: 5px 8px;
+    }
+}

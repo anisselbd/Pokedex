@@ -7,12 +7,57 @@
     <title>Pokemon</title>
     <link rel="stylesheet" href="../styles/index.css">
     <link rel="stylesheet" href="../styles/global.css">
+    <link rel="stylesheet" href="../styles/navbar.css">
     <link rel="icon" type="image/x-icon" href="../assets/logo.png">
     <link href="https://fonts.cdnfonts.com/css/pokemon-solid" rel="stylesheet">
     <script src="../scripts/index.js" defer></script>
 </head>
 
 <body>
+<nav class="navbar">
+    <div class="navContainer">
+        <a href="index.html" class="navLogo">Pokédex</a>
+        <ul class="navMenu">
+            <li class="navItem">
+                <a href="index.html" class="navLink">Tous les Pokémon</a>
+            </li>
+            <li class="navItem dropdown">
+                <a href="#" class="navLink">Par Génération ▼</a>
+                <ul class="dropdownMenu">
+                    <li><a href="?gen=1">Génération 1 (Kanto)</a></li>
+                    <li><a href="?gen=2">Génération 2 (Johto)</a></li>
+                    <li><a href="?gen=3">Génération 3 (Hoenn)</a></li>
+                    <li><a href="?gen=4">Génération 4 (Sinnoh)</a></li>
+                    <li><a href="?gen=5">Génération 5 (Unys)</a></li>
+                    <li><a href="?gen=6">Génération 6 (Kalos)</a></li>
+                    <li><a href="?gen=7">Génération 7 (Alola)</a></li>
+                    <li><a href="?gen=8">Génération 8 (Galar)</a></li>
+                    <li><a href="?gen=9">Génération 9 (Paldea)</a></li>
+                </ul>
+            </li>
+            <li class="navItem dropdown">
+                <a href="#" class="navLink">Par Jeu ▼</a>
+                <ul class="dropdownMenu">
+                    <li><a href="?game=red">Pokémon Rouge</a></li>
+                    <li><a href="?game=blue">Pokémon Bleu</a></li>
+                    <li><a href="?game=yellow">Pokémon Jaune</a></li>
+                    <li><a href="?game=gold">Pokémon Or</a></li>
+                    <li><a href="?game=silver">Pokémon Argent</a></li>
+                    <li><a href="?game=crystal">Pokémon Cristal</a></li>
+                    <li><a href="?game=ruby">Pokémon Rubis</a></li>
+                    <li><a href="?game=sapphire">Pokémon Saphir</a></li>
+                    <li><a href="?game=emerald">Pokémon Émeraude</a></li>
+                    <li><a href="?game=firered">Pokémon Rouge Feu</a></li>
+                    <li><a href="?game=leafgreen">Pokémon Vert Feuille</a></li>
+                    <li><a href="?game=diamond">Pokémon Diamant</a></li>
+                    <li><a href="?game=pearl">Pokémon Perle</a></li>
+                    <li><a href="?game=platinum">Pokémon Platine</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</nav>
+
 <h1>Pokémon</h1>
 <input type="text" id="search" placeholder="Rechercher un Pokémon...">
 <div id="pokemons"></div>

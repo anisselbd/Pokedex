@@ -2,20 +2,66 @@ document.addEventListener('DOMContentLoaded', () => {
     const pokemonsDiv = document.getElementById("pokemons");
     const searchInput = document.getElementById("search");
     let allPokemons = [];
+    
+    // Récupérer les paramètres de filtrage depuis l'URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const genFilter = urlParams.get('gen');
+    const gameFilter = urlParams.get('game');
+    console.log(genFilter, gameFilter);
 
     searchInput.addEventListener("input", (event) => { // Filtre les pokémons en fonction de la recherche
+        const searchValue = searchInput.value.toLowerCase();
         const filteredPokemons = allPokemons.filter(pokemon => {
-            return pokemon.name.toLowerCase().includes(searchInput.value.toLowerCase());
+            const englishName = pokemon.name.toLowerCase();
+            const frenchName = pokemon.frenchName ? pokemon.frenchName.toLowerCase() : "";
+            return englishName.includes(searchValue) || frenchName.includes(searchValue);
         });
         displayPokemons(filteredPokemons); // Affiche les pokémons filtrés
     });
 
-    fetch("https://pokeapi.co/api/v2/pokemon?limit=3000").then(response => { // Récupère la liste de tous les pokémons
-        return response.json();
-    }).then(data => { // Récupère les données de la réponse
-        allPokemons = data.results; // Stocke tous les pokémons dans une variable globale
-        displayPokemons(allPokemons); // Affiche tous les pokémons au chargement de la page
-    });
+    // Si un filtre de génération est actif
+    if (genFilter) {
+        fetch("https://pokeapi.co/api/v2/generation/" + genFilter).then(response => {
+            return response.json();
+        }).then(genData => {
+            allPokemons = genData.pokemon_species.map(species => ({
+                name: species.name,
+                url: species.url.replace('pokemon-species', 'pokemon')
+            }));
+            displayPokemons(allPokemons);
+        });
+    } 
+    // Si un filtre de jeu est actif
+    else if (gameFilter) {
+        fetch("https://pokeapi.co/api/v2/version/" + gameFilter).then(response => {
+            return response.json();
+        }).then(versionData => {
+            // On récupère via le version-group
+            return fetch(versionData.version_group.url);
+        }).then(response => {
+            return response.json();
+        }).then(groupData => {
+            // Récupère la génération associée pour avoir les Pokémon
+            return fetch(groupData.generation.url);
+        }).then(response => {
+            return response.json();
+        }).then(genData => {
+            allPokemons = genData.pokemon_species.map(species => ({
+                name: species.name,
+                url: species.url.replace('pokemon-species', 'pokemon')
+            }));
+            displayPokemons(allPokemons);
+        });
+    } 
+    // Sinon, récupérer tous les Pokémon
+    else {
+        fetch("https://pokeapi.co/api/v2/pokemon?limit=150").then(response => {
+            return response.json();
+        }).then(data => {
+            allPokemons = data.results;
+            displayPokemons(allPokemons);
+        });
+    }
 
     function displayPokemons(pokemons) {
         pokemonsDiv.innerHTML = ""; // vide la div avant de rajouter les pokémons
@@ -52,6 +98,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     const frenchName = speciesData.names.find(name => name.language.name === "fr");
                     if (frenchName) {
                         h2.innerText = frenchName.name;
+                        // Stocker le nom français dans l'objet pokemon pour la recherche
+                        pokemon.frenchName = frenchName.name;
                     }
                 });
             });

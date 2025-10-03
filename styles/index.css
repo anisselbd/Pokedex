@@ -56,3 +56,88 @@ h1:hover {
     outline: none;
     max-width: 400px;
 }
+
+/* Responsive */
+@media (max-width: 1200px) {
+    .card {
+        width: 30%;
+    }
+}
+
+@media (max-width: 900px) {
+    .card {
+        width: 40%;
+        height: 280px;
+    }
+    
+    .card h2 {
+        font-size: 1.7rem;
+    }
+    
+    #search {
+        width: 70%;
+        font-size: 1.1rem;
+    }
+}
+
+@media (max-width: 768px) {
+    h1 {
+        font-size: 3rem;
+        margin-top: 20px;
+    }
+    
+    .card {
+        width: 45%;
+        height: 260px;
+    }
+    
+    .card h2 {
+        font-size: 1.5rem;
+    }
+    
+    .card img {
+        max-height: 200px;
+    }
+    
+    #search {
+        width: 80%;
+        padding: 8px;
+    }
+    
+    #pokemons {
+        gap: 15px;
+        padding: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    h1 {
+        font-size: 2.5rem;
+        margin-top: 15px;
+    }
+    
+    .card {
+        width: 90%;
+        height: 300px;
+        margin: 10px;
+    }
+    
+    .card h2 {
+        font-size: 1.8rem;
+    }
+    
+    .card img {
+        max-height: 220px;
+        width: 70%;
+    }
+    
+    #search {
+        width: 90%;
+        font-size: 1rem;
+    }
+    
+    #pokemons {
+        gap: 10px;
+        padding: 10px;
+    }
+}
