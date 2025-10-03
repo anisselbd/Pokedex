@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
     } 
     // Sinon, récupérer tous les Pokémon
     else {
-        fetch("https://pokeapi.co/api/v2/pokemon?limit=150").then(response => {
+        fetch("https://pokeapi.co/api/v2/pokemon?limit=151").then(response => {
             return response.json();
         }).then(data => {
             allPokemons = data.results;

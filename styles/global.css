@@ -1,3 +1,15 @@
+/* Empêcher le scroll horizontal sur tout le site */
+html, body {
+    overflow-x: hidden;
+    max-width: 100vw;
+    margin: 0;
+    padding: 0;
+}
+
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
 :root {
     --title-color: #dd8948;
     --font-style: 'Pokemon Solid', sans-serif;

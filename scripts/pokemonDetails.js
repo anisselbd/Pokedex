@@ -29,7 +29,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }).then(dataPokemon => {
         pokemonImage.src = dataPokemon.sprites.other.showdown.front_default || dataPokemon.sprites.front_default;
         pokemonImage.alt = pokemonName; // Texte alternatif si l'image ne charge pas
-        console.log(dataPokemon);
         dataPokemon.stats.forEach(stat => { // Afficher les stats
             const statDiv = document.createElement("div");
             statDiv.className = "statBar"; 
@@ -64,6 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         dataPokemon.types.forEach(type => { // Récupérer les faiblesses et forces de chaque type
             fetch(type.type.url).then(response => {
+                console.log(type.type.url); // pour m'aider à trouver les bonnes URLs
                 return response.json();
             }).then(typeData => {
 
@@ -114,7 +114,7 @@ document.addEventListener('DOMContentLoaded', () => {
     fetch("https://pokeapi.co/api/v2/pokemon-species/" + pokemonName).then(response => {
         return response.json();
     }).then(speciesData => {
-        console.log(speciesData);
+
         
         const frenchDescription = speciesData.flavor_text_entries.find(
             entry => entry.language.name === "fr"
