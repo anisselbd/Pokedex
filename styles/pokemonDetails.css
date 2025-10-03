@@ -23,6 +23,13 @@ h1 {
     flex-wrap: wrap;
 }
 
+.leftColumn {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+}
+
 .pokemonCard {
     background-color: rgb(228, 228, 228);
     border-radius: 25px;
@@ -36,6 +43,43 @@ h1 {
     width: 250px;
     height: 250px;
     object-fit: contain;
+}
+
+.tcgCardContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    align-items: center;
+    width: 100%;
+}
+
+.tcgCardWrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.tcgCardWrapper h3 {
+    color: var(--yellow-pokemon);
+    font-size: 1.2rem;
+    margin: 0;
+    text-align: center;
+}
+
+.tcgCardImage {
+    width: 100%;
+    max-width: 300px;
+    height: auto;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: none; /* Caché par défaut, affiché via JS si une carte est trouvée */
+}
+
+.tcgCardImage:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 25px rgba(255, 215, 0, 0.5);
 }
 
 .playButton {

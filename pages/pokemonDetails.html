@@ -60,10 +60,23 @@
     <h1 id="pokemonName"></h1>
     
     <div class="pokemonContainer">
-        <div class="pokemonCard">
-            <img id="pokemonImage" src="" alt="Pokemon">
-            <button id="playButton" class="playButton">▶</button>
-            <audio id="pokemonAudio"></audio>
+        <div class="leftColumn">
+            <div class="pokemonCard">
+                <img id="pokemonImage" src="" alt="Pokemon">
+                <button id="playButton" class="playButton">▶</button>
+                <audio id="pokemonAudio"></audio>
+            </div>
+            
+            <div class="tcgCardContainer">
+                <div class="tcgCardWrapper">
+                    <h3>Carte la plus ancienne</h3>
+                    <img id="tcgCardOldest" src="" alt="Carte TCG ancienne" class="tcgCardImage">
+                </div>
+                <div class="tcgCardWrapper">
+                    <h3>Carte la plus récente</h3>
+                    <img id="tcgCardNewest" src="" alt="Carte TCG récente" class="tcgCardImage">
+                </div>
+            </div>
         </div>
         
         <div class="pokemonInfo">

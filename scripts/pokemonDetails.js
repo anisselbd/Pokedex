@@ -73,7 +73,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     badge.innerText = weakness.name; 
 
                     if (!Array.from(weaknessesDiv.children).some(child => child.innerText === weakness.name)) { // evite les doublons de badge faiblesses (ex: si un pokémon a deux types eau, ca n'affiche qu'une fois la faiblesse électricité)
-                        weaknessesDiv.appendChild(badge); // Ajoute le badge des faiblesses unique 
+                        weaknessesDiv.appendChild(badge); // Ajoute le badge des faiblesses unique de chaque type
                     }
                 });
 
@@ -157,4 +157,38 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
     });
+
+    // Récupérer les cartes TCG du Pokémon via l'api TCGdex
+    const tcgCardOldest = document.getElementById("tcgCardOldest");
+    const tcgCardNewest = document.getElementById("tcgCardNewest");
+    const pokemonNameCapitalized = pokemonName.charAt(0).toUpperCase() + pokemonName.slice(1);
+    
+    fetch(`https://api.tcgdex.net/v2/en/cards?name=${pokemonNameCapitalized}`)
+        .then(response => response.json())
+        .then(cards => {
+            console.log('Cartes TCG trouvées pour', pokemonNameCapitalized, ':', cards.length);
+            
+            // Filtrer les cartes qui ont une image
+            const cardsWithImages = cards.filter(card => card.image);
+            
+            if (cardsWithImages.length > 0) {
+                // Carte la plus ancienne (première de la liste)
+                const oldestCard = cardsWithImages[0];
+                tcgCardOldest.src = oldestCard.image + '/high.webp';
+                tcgCardOldest.alt = `Carte ${pokemonNameCapitalized} ancienne`;
+                tcgCardOldest.style.display = 'block';
+                console.log('Carte la plus ancienne:', oldestCard.id);
+                
+                // Carte la plus récente (dernière de la liste)
+                const newestCard = cardsWithImages[cardsWithImages.length - 1];
+                tcgCardNewest.src = newestCard.image + '/high.webp';
+                tcgCardNewest.alt = `Carte ${pokemonNameCapitalized} récente`;
+                tcgCardNewest.style.display = 'block';
+                console.log('Carte la plus récente:', newestCard.id);
+            } else {
+                console.log('Aucune carte avec image trouvée pour', pokemonNameCapitalized);
+                tcgCardOldest.style.display = 'none';
+                tcgCardNewest.style.display = 'none';
+            }
+        });
 });
