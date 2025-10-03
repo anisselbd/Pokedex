@@ -44,6 +44,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
                 div.appendChild(img);
                 div.appendChild(h2);
+                
+                // Récupérer le nom en français
+                fetch("https://pokeapi.co/api/v2/pokemon-species/" + pokemon.name).then(response => {
+                    return response.json();
+                }).then(speciesData => {
+                    const frenchName = speciesData.names.find(name => name.language.name === "fr");
+                    if (frenchName) {
+                        h2.innerText = frenchName.name;
+                    }
+                });
             });
         }
     }

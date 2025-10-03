@@ -9,6 +9,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const strengthsDiv = document.getElementById("strengths");
     const pokemonAudio = document.getElementById("pokemonAudio");
     const playButton = document.getElementById("playButton");
+    const descriptionP = document.getElementById("description");
+    const gamesDiv = document.getElementById("games");
     const statTranslations = { // pas ouf, à changer via API ou fichier JSON plus tard
     "hp": "PV",
     "attack": "Attaque",
@@ -25,10 +27,9 @@ document.addEventListener('DOMContentLoaded', () => {
     fetch("https://pokeapi.co/api/v2/pokemon/" + pokemonName).then(response => {
         return response.json();
     }).then(dataPokemon => {
-        console.log(dataPokemon);
         pokemonImage.src = dataPokemon.sprites.other.showdown.front_default || dataPokemon.sprites.front_default;
         pokemonImage.alt = pokemonName; // Texte alternatif si l'image ne charge pas
-
+        console.log(dataPokemon);
         dataPokemon.stats.forEach(stat => { // Afficher les stats
             const statDiv = document.createElement("div");
             statDiv.className = "statBar"; 
@@ -107,5 +108,53 @@ document.addEventListener('DOMContentLoaded', () => {
         pokemonAudio.addEventListener("ended", () => { // Réinitialise le bouton quand l'audio se termine pour pouvoir le rejouer
             playButton.innerText = "▶";
         });
+    });
+
+    // recup la descrptn du Pokémon en FR
+    fetch("https://pokeapi.co/api/v2/pokemon-species/" + pokemonName).then(response => {
+        return response.json();
+    }).then(speciesData => {
+        console.log(speciesData);
+        
+        const frenchDescription = speciesData.flavor_text_entries.find(
+            entry => entry.language.name === "fr"
+        );
+        
+        if (frenchDescription) {
+            // Nettoyer la description (remplacer les \n et \f par des espaces)
+            descriptionP.innerText = frenchDescription.flavor_text.replace(/[\n\f]/g, ' ');
+        } else {
+            descriptionP.innerText = "Description non disponible.";
+        }
+        
+        // recup aussi le nom en français
+        const frenchName = speciesData.names.find(name => name.language.name === "fr");
+        if (frenchName) {
+            h1.innerText = frenchName.name;
+        }
+        
+        // recup les versions de jeux où le Pokémon apparaît
+        if (speciesData.flavor_text_entries && speciesData.flavor_text_entries.length > 0) {
+            // Créer un Set pour éviter les doublons
+            const uniqueGames = new Set();
+            
+            speciesData.flavor_text_entries.forEach(entry => {
+                uniqueGames.add(entry.version.name);
+            });
+            
+            // Convertir en tableau et afficher
+            const gamesArray = Array.from(uniqueGames);
+            
+            if (gamesArray.length > 0) {
+                gamesArray.forEach(game => {
+                    const gameSpan = document.createElement("span");
+                    gameSpan.className = "gameBadge";
+                    gameSpan.innerText = game.replace(/-/g, ' ').toUpperCase(); // Remplace les tirets par des espaces et met en majuscules
+                    gamesDiv.appendChild(gameSpan);
+                });
+            } else {
+                gamesDiv.innerText = "Aucun jeu disponible.";
+            }
+        }
     });
 });
