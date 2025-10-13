@@ -164,7 +164,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const pokemonNameCapitalized = pokemonName.charAt(0).toUpperCase() + pokemonName.slice(1);
     
     fetch(`https://api.tcgdex.net/v2/en/cards?name=${pokemonNameCapitalized}`)
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('API TCGdex non disponible');
+            }
+            return response.json();
+        })
         .then(cards => {
             console.log('Cartes TCG trouvées pour', pokemonNameCapitalized, ':', cards.length);
             
@@ -189,6 +194,18 @@ document.addEventListener('DOMContentLoaded', () => {
                 console.log('Aucune carte avec image trouvée pour', pokemonNameCapitalized);
                 tcgCardOldest.style.display = 'none';
                 tcgCardNewest.style.display = 'none';
+            }
+        })
+        .catch(error => {
+            console.warn('⚠️ Impossible de charger les cartes TCG:', error.message);
+            console.log('Les cartes TCG ne seront pas affichées pour le moment.');
+            tcgCardOldest.style.display = 'none';
+            tcgCardNewest.style.display = 'none';
+            
+            // Optionnel : afficher un message à l'utilisateur
+            const tcgContainer = document.querySelector('.tcgCardContainer');
+            if (tcgContainer) {
+                tcgContainer.innerHTML = '<p style="color: #888; text-align: center;">⚠️ Cartes TCG temporairement indisponibles</p>';
             }
         });
 });
