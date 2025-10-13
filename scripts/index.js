@@ -7,7 +7,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const urlParams = new URLSearchParams(window.location.search);
     const genFilter = urlParams.get('gen');
     const gameFilter = urlParams.get('game');
-    console.log(genFilter, gameFilter);
+    const typeFilter = urlParams.get('type');
+    console.log(genFilter, gameFilter, typeFilter);
 
     searchInput.addEventListener("input", (event) => { // Filtre les pokémons en fonction de la recherche
         const searchValue = searchInput.value.toLowerCase();
@@ -52,7 +53,19 @@ document.addEventListener('DOMContentLoaded', () => {
             }));
             displayPokemons(allPokemons);
         });
-    } 
+    }
+    // Si un filtre de type est actif
+    else if (typeFilter) {
+        fetch("https://pokeapi.co/api/v2/type/" + typeFilter).then(response => {
+            return response.json();
+        }).then(typeData => {
+            allPokemons = typeData.pokemon.map(p => ({ 
+                name: p.pokemon.name,
+                url: p.pokemon.url
+            }));
+            displayPokemons(allPokemons);
+        });
+    }
     // Sinon, récupérer tous les Pokémon
     else {
         fetch("https://pokeapi.co/api/v2/pokemon?limit=3000").then(response => {
